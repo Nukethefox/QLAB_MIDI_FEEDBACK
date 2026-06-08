@@ -6,6 +6,7 @@ QLAB_OUT = 'Driver IAC IACtoQLAB'
 
 # --- Put here the exact buttons used  ---
 # --- (in this example, on the AKAI APC MINI MK2, I'm using the first 7 buttons on each row + the first 4 buttons above the faders)
+# --- (you will need a midi monitor like MIDI-OX in order to see the Note from each button)
 QLAB_NOTES = [
   56,57,58,59,60,61,62,
   48,49,50,51,52,53,54,
@@ -20,11 +21,11 @@ QLAB_NOTES = [
 
 # --- channel config ---
 IN_CHANNEL  = 1   # AKAI sends on ch1
-OUT_CHANNEL = 10  # QLab listens on ch10
+OUT_CHANNEL = 10  # QLab listens on ch10 (REMEMBER to configure that on QLAB!!)
 
 # Just like in the code above, each row represents a physical row...
 # I'm using 104 row as panic, go, pause, resume
-# colours: 0 off, 3 white, blue 40-44-41-45, red 5, orange 60, yellow 13, green 21 or 17, 54 dark pink
+# Colors for the AKAI (see documentation for your midi device): 0 off, 3 white, blue 40-44-41-45, red 5, orange 60, yellow 13, green 21 or 17, 54 dark pink
 GRID_COLORS = {
   56: 40, 57: 21, 58: 13, 59: 5, 60: 40, 61: 54, 62: 54,
   48: 40, 49: 13, 50: 5, 51: 40, 52: 5, 53: 54, 54: 54,
@@ -73,7 +74,7 @@ for note in EXTRA_COLORS:
 
 print("MIDI bridge + LEDs are active now. Ctrl+C to exit.")
 
-# --- main loop to send to qlab ---
+# --- main loop to send notes to qlab ---
 for msg in akai_in:
     if msg.type == 'note_on' and msg.note in QLAB_NOTES:
         if msg.channel + 1 == IN_CHANNEL:
